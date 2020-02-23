@@ -1,0 +1,27 @@
+package syscall
+
+const (
+	//在window下仿造linux信号
+	SIGCHLD   = (0x10)
+	SIGCLD    = (0x11)
+	SIGCONT   = (0x12)
+	SIGIO     = (0x13)
+	SIGIOT    = (0x14)
+	SIGPOLL   = (0x15)
+	SIGPROF   = (0x16)
+	SIGPWR    = (0x17)
+	SIGSTKFLT = (0x18)
+	SIGSTOP   = (0x19)
+	SIGSYS    = (0x1a)
+	SIGTSTP   = (0x1b)
+	SIGTTIN   = (0x1c)
+	SIGTTOU   = (0x1d)
+	SIGUNUSED = (0x1e)
+	SIGURG    = (0x1f)
+	SIGUSR1   = (0x20)
+	SIGUSR2   = (0x21)
+	SIGVTALRM = (0x22)
+	SIGWINCH  = (0x23)
+	SIGXCPU   = (0x24)
+	SIGXFSZ   = (0x25)
+)
