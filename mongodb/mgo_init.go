@@ -3,8 +3,7 @@ package mongodb
 import (
 	"fmt"
 
-	"this_is_a_explame/lib/configloader"
-	"this_is_a_explame/lib/mongodb/api"
+	"golibrary/mongodb/api"
 )
 
 var mgoConnMap = make(map[string]*api.MongoSession)
@@ -18,12 +17,5 @@ func Mongo(key string) (*api.MongoSession, error) {
 }
 
 func init() {
-	userName := configloader.GlobalConf.GetString("userName", "hhh")
-	mgoConf := &api.MgoConf{
-		Username: userName,
-	}
-	session, err := api.NewMongoDBSessionWithConf(mgoConf)
-	if err == nil {
-		mgoConnMap[""] = session
-	}
+
 }

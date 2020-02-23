@@ -21,6 +21,7 @@ type ConfLoader interface {
 
 //ConfLoaderOp 获取配置对象操作的接口
 type ConfLoaderOp interface {
+	GetMetaData() map[string]interface{}
 	GetInt(key string, defultValue int) int
 	GetBool(key string, defultValue bool) bool
 	GetString(key string, defultValue string) string
@@ -32,6 +33,14 @@ type ConfLoaderOp interface {
 type baseConfLoader struct {
 	confMeta map[string]interface{}
 	lock    *sync.Mutex
+}
+
+func (b *baseConfLoader)GetMetaData() map[string]interface{} {
+	tmpMetaData := make(map[string]interface{})
+	for k,v :=range b.confMeta {
+		tmpMetaData[k] = v
+	}
+	return tmpMetaData
 }
 
 func (b *baseConfLoader) init() {
