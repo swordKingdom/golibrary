@@ -17,6 +17,8 @@ const (
 	TomlConfType = "toml"
 )
 
+var GlobalConfig loader.ConfLoader
+
 //LoadConfig 加载配置文件
 func LoadConfig(file string) (loader.ConfLoader, error) {
 	tmpStrArr := strings.Split(file, FileNameDefultStepSep)
@@ -33,10 +35,3 @@ func LoadConfig(file string) (loader.ConfLoader, error) {
 	}
 }
 
-func LoadDefaultConfig() (loader.ConfLoader,error) {
-	loader,err := LoadConfig("./conf.yml")
-	if err != nil {
-		return nil,err
-	}
-	return loader,nil
-}

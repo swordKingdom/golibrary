@@ -14,6 +14,15 @@ func RegisteConfLoaderGenerator(confType string, generator GeneratorFunc) {
 	}
 }
 
+func loadDefaultConfig() (loader.ConfLoader,error) {
+	loader,err := LoadConfig("./conf.yml")
+	if err != nil {
+		return nil,err
+	}
+	return loader,nil
+}
+
 func init() {
 	confLoaderMap[YamlConfType] = loader.NewYamlLoader
+	loadDefaultConfig()
 }

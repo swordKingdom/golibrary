@@ -2,6 +2,7 @@ package mongodb
 
 import (
 	"fmt"
+	"sync"
 
 	"golibrary/mongodb/api"
 )
@@ -16,6 +17,12 @@ func Mongo(key string) (*api.MongoSession, error) {
 	}
 }
 
-func init() {
+var once sync.Once
 
+func initMongoDB(){
+
+}
+
+func Init() {
+	once.Do(initMongoDB)
 }
