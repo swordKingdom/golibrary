@@ -3,16 +3,25 @@ package loader
 import (
 	"bufio"
 	"errors"
+	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"os"
-
-	"gopkg.in/yaml.v2"
 )
 
 //YamlLoader yaml配置文件加载对象
 type YamlLoader struct {
 	baseConfLoader
 	confPath string
+}
+
+
+
+func (y *YamlLoader) saveConf(metaData interface{}) error {
+	setDataFunc := func (name string ,value interface{}){
+		y.confMeta[name] = value
+	}
+	analysisStruct("",metaData,setDataFunc)
+	return nil
 }
 
 //LoadConfigFromFile 读取配置文件
@@ -26,6 +35,7 @@ func (y *YamlLoader) LoadConfigFromFile(fileName string) error {
 			fileName = EnvConfBasePath
 		}
 	}
+	y.confPath = fileName
 	if info, _ := os.Stat(fileName); info == nil {
 		return errors.New("load conf error")
 	}
@@ -34,20 +44,19 @@ func (y *YamlLoader) LoadConfigFromFile(fileName string) error {
 		return err
 	}
 	defer file.Close()
-
 	bs, err := ioutil.ReadAll(bufio.NewReader(file))
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(bs, &y.baseConfLoader.confMap)
+	var conf interface{}
+	err = yaml.Unmarshal(bs, &conf)
 	if err != nil {
 		return err
 	}
-	y.confPath = fileName
-	return nil
+	return y.saveConf(conf)
 }
 
-//LoadConfigFromFileReader 从fileReader对象中读取配置
+//LoadConfigFromFileReader 从fileReader对象中读 取配置
 func (y *YamlLoader) LoadConfigFromFileReader(file *os.File) error {
 	y.baseConfLoader.lock.Lock()
 	defer y.baseConfLoader.lock.Unlock()
@@ -55,7 +64,7 @@ func (y *YamlLoader) LoadConfigFromFileReader(file *os.File) error {
 	if err != nil {
 		return err
 	}
-	err = yaml.Unmarshal(bs, &y.baseConfLoader.confMap)
+	err = yaml.Unmarshal(bs, &y.baseConfLoader.confMeta)
 	if err != nil {
 		return err
 	}
