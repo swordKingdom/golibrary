@@ -12,6 +12,8 @@ type GeneratorFunc func() loader.ConfLoader
 var confLoaderMap = make(map[string]GeneratorFunc)
 
 const (
+	//FileNameDefultStepSep 文件后缀分割符号
+	FileNameDefultStepSep = "."
 	//YamlConfType yaml文件类型
 	YamlConfType = "yml"
 	//todo:未支持
@@ -19,8 +21,6 @@ const (
 	XMLConfType = "xml"
 	//TomlConfType toml文件类型
 	TomlConfType = "toml"
-	//FileNameDefultStepSep 文件后缀分割符号
-	FileNameDefultStepSep = "."
 )
 
 //LoadConfig 加载配置文件
